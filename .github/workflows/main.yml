@@ -1,0 +1,21 @@
+name: build and publish image to docker hub
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: build image
+        run: docker build ./ -t caiomarinello/ninjagateway:latest
+
+      - name: push image to docker hub
+        run: |
+          docker login -u caiomarinello1@gmail.com -p ${{ secrets.DOCKER_HUB_TOKEN }}
+          docker push caiomarinello/ninjagateway:latest
