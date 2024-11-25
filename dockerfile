@@ -11,4 +11,6 @@ COPY . .
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o /ninjaGateway
 
+EXPOSE 8085
+
 CMD ["/ninjaGateway"]
