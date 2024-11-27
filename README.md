@@ -7,11 +7,11 @@ The API Gateway provides a unified entry point to the Ninja Tech marketplace cha
 
 ## Authentication & Authorization Endpoints
 
-| **Method** | **Endpoint** | **Description**                   | **Access** | **Status**         |
-| ---------- | ------------ | --------------------------------- | ---------- | ------------------ |
-| POST       | `/register`  | Register a new user.              | User       | 🔴 Not Implemented |
-| POST       | `/login`     | Authenticate a user in a session. | User       | 🔴 Not Implemented |
-| POST       | `/logout`    | Log out the authenticated user.   | User       | 🔴 Not Implemented |
+| **Method** | **Endpoint** | **Description**                   | **Access** | **Status**     |
+| ---------- | ------------ | --------------------------------- | ---------- | -------------- |
+| POST       | `/register`  | Register a new user.              | User       | 🟢 Implemented |
+| POST       | `/login`     | Authenticate a user in a session. | User       | 🟢 Implemented |
+| POST       | `/logout`    | Log out the authenticated user.   | User       | 🟢 Implemented |
 
 ## Related Repositories
 
