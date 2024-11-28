@@ -58,7 +58,7 @@ func main() {
 
 	r.POST("/login", hdl.HandleLogin(mysqlSessionStore, repos.NewUserRepository(dbConn))) 
 	r.POST("/register", hdl.HandleRegisterUser(repos.NewUserRepository(dbConn)))
-	r.POST("/logout", hdl.HandleLogout(mysqlSessionStore))
+	userAuthorized.POST("/logout", hdl.HandleLogout(mysqlSessionStore))
 
 	r.GET("/products", func(c *gin.Context) {
 		utils.ForwardRequest(c, os.Getenv("UPSTREAM_URL") + "/products", nil)
@@ -90,6 +90,14 @@ func main() {
 		headers["user_id"] = strconv.Itoa(sessionUser.Id)
 
 		utils.ForwardRequest(c, os.Getenv("UPSTREAM_URL") + "/checkout", headers)
+	})
+	
+	userAuthorized.GET("/orders", func(c *gin.Context) {
+		utils.ForwardRequest(c, os.Getenv("UPSTREAM_URL") + "/orders", nil)
+	})
+
+	userAuthorized.GET("/order/:orderId", func(c *gin.Context) {
+		utils.ForwardRequest(c, os.Getenv("UPSTREAM_URL") + "/order/" + c.Param("orderId"), nil)
 	})
 	
 	r.Run(":8085")
