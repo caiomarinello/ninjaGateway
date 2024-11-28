@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/caiomarinello/ninjaGateway/components"
 	"github.com/caiomarinello/ninjaGateway/db"
@@ -59,21 +60,37 @@ func main() {
 	r.POST("/register", hdl.HandleRegisterUser(repos.NewUserRepository(dbConn)))
 	r.POST("/logout", hdl.HandleLogout(mysqlSessionStore))
 
-	userAuthorized.GET("/products", func(c *gin.Context) {
-		utils.ForwardRequest(c, os.Getenv("UPSTREAM_URL") + "/products")
+	r.GET("/products", func(c *gin.Context) {
+		utils.ForwardRequest(c, os.Getenv("UPSTREAM_URL") + "/products", nil)
 	})
-	userAuthorized.GET("/product/:productId", func(c *gin.Context) {
-		utils.ForwardRequest(c, os.Getenv("UPSTREAM_URL") + "/product/" + c.Param("productId"))
+	r.GET("/product/:productId", func(c *gin.Context) {
+		utils.ForwardRequest(c, os.Getenv("UPSTREAM_URL") + "/product/" + c.Param("productId"), nil)
 	})
 	admin.POST("/product", func(c *gin.Context) {
-		utils.ForwardRequest(c, os.Getenv("UPSTREAM_URL") + "/product")
+		utils.ForwardRequest(c, os.Getenv("UPSTREAM_URL") + "/product", nil)
 	})
 	admin.PUT("/product/:productId", func(c *gin.Context) {
-		utils.ForwardRequest(c, os.Getenv("UPSTREAM_URL") + "/product/" + c.Param("productId"))
+		utils.ForwardRequest(c, os.Getenv("UPSTREAM_URL") + "/product/" + c.Param("productId"), nil)
 	})
 	admin.DELETE("/product/:productId", func(c *gin.Context) {
-		utils.ForwardRequest(c, os.Getenv("UPSTREAM_URL") + "/product/" + c.Param("productId"))
+		utils.ForwardRequest(c, os.Getenv("UPSTREAM_URL") + "/product/" + c.Param("productId"), nil)
 	})
 
+	userAuthorized.POST("/checkout", func(c *gin.Context) {
+
+		sessionUserData, exists := c.Get("sessionUser")
+		if !exists {
+			log.Println("User not found in context")
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "User not authorized"})
+			return
+		}
+		sessionUser := sessionUserData. (components.User)
+
+		headers := make(map[string]string)
+		headers["user_id"] = strconv.Itoa(sessionUser.Id)
+
+		utils.ForwardRequest(c, os.Getenv("UPSTREAM_URL") + "/checkout", headers)
+	})
+	
 	r.Run(":8085")
 }

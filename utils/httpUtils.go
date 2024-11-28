@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ForwardRequest(c *gin.Context, url string) {
+func ForwardRequest(c *gin.Context, url string, customHeaders map[string]string) {
 	body, err := io.ReadAll(c.Request.Body)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to read request body: " + err.Error()})
@@ -28,6 +28,11 @@ func ForwardRequest(c *gin.Context, url string) {
 		for _, value := range values {
 			req.Header.Add(key, value)
 		}
+	}
+
+	// Add custom headers
+	for key, value := range customHeaders {
+		req.Header.Add(key, value)
 	}
 
 	// Forward the request
