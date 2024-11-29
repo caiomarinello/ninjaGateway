@@ -29,7 +29,7 @@ func init() {
 
 	var secretKey = []byte(os.Getenv("SECRET_KEY"))
 	var tableName = "sessions"
-	var dbConnString = os.Getenv("DB_USER") + ":" + os.Getenv("DB_PASSWD") + "@tcp(127.0.0.1:3306)/" + os.Getenv("DB_NAME") + "?parseTime=true&loc=Local"
+	var dbConnString = os.Getenv("DB_USER") + ":" + os.Getenv("DB_PASSWD")+ "@tcp(" + os.Getenv("DB_HOST") + ":3306)/" + os.Getenv("DB_NAME") +  "?parseTime=true&loc=Local"
 	mysqlSessionStore, err = mysqlstore.NewMySQLStore(dbConnString, tableName, "/", 3600, secretKey)
 	if err != nil {
 		log.Println(err)
