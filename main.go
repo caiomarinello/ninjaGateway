@@ -50,6 +50,8 @@ func main() {
 
 	r := gin.Default()
 
+	r.Use(mdw.HandleErrors())
+
 	dbConn := db.OpenSqlConnection()
 	defer dbConn.Close()
 
