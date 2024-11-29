@@ -5,6 +5,15 @@ The API Gateway provides a unified entry point to the Ninja Tech marketplace cha
 - Routing requests to appropriate backend services.
 - Authentication and session management.
 
+## Table of Contents
+
+1. [Project Setup (Docker)](#project-setup-docker)
+2. [Alternative Project Setup (Without Docker)](#alternative-project-setup-without-docker)
+3. [Access Endpoints](#access-endpoints)
+4. [Related Repositories](#related-repositories)
+
+---
+
 ## Project Setup (docker)
 
 This project setup requires you to have docker installed. If you prefer to run `ninja` and `ninjaGateway` services manually, refer to the Alternative Project Setup section.
@@ -46,6 +55,8 @@ docker-compose up --build
 ```
 
 This will set up the environment, build the Docker containers, and start the services as defined in the `docker-compose.yml` file.
+
+---
 
 ## Alternative Project Setup (Without Docker)
 
