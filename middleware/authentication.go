@@ -32,7 +32,7 @@ func AuthenticateSession(store auth.SessionStore) gin.HandlerFunc {
 }
 
 const (
-    adminRole = "admin"
+	adminRole = "admin"
 )
 
 // Middleware function to check if a user is logged in and is an admin, adding the user data to the gin context if so.
@@ -52,7 +52,7 @@ func AuthenticateAdminSession(store auth.SessionStore) gin.HandlerFunc {
 		}
 
 		if sessionUser.Role != adminRole {
-			log.Println("user does not have permission to acess")
+			log.Println("user does not have permission to access")
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "no permission"})
 			return
 		}

@@ -27,6 +27,7 @@ func HandleRegisterUser(registrar repos.Registrar[comp.User]) gin.HandlerFunc {
 			return
 		}
 
+		// Validate struct fields
 		ok, err := utils.ValidateStructFields(c, newUser)
 		if !ok {
 			c.AbortWithError(http.StatusBadRequest, err)

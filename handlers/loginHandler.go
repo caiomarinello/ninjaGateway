@@ -20,6 +20,15 @@ func HandleLogin(store auth.SessionStore, userFetcher repos.UserFetcher) gin.Han
 			return
 		}
 
+		// Check if a user is already logged in
+		existingUser, ok := session.Values["user"].(components.User)
+		if ok && existingUser.Authenticated {
+			c.AbortWithError(http.StatusBadRequest, errors.New("you are already logged in")).SetMeta(map[string]interface{}{
+				"error": "user already logged in",
+			})
+			return
+		}
+
 		var loginBodyInf components.User
 		if err := c.BindJSON(&loginBodyInf); err != nil {
 			c.AbortWithError(http.StatusBadRequest, errors.New(err.Error())).SetMeta(map[string]interface{}{
@@ -44,9 +53,9 @@ func HandleLogin(store auth.SessionStore, userFetcher repos.UserFetcher) gin.Han
 			return
 		}
 		user := &components.User{
-			Id:				userFromDb.Id,
-			Role:          	userFromDb.Role,
-			Authenticated: 	true,
+			Id:            userFromDb.Id,
+			Role:          userFromDb.Role,
+			Authenticated: true,
 		}
 
 		session.Values["user"] = user
