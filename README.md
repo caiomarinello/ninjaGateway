@@ -104,6 +104,8 @@ More endpoints can be accessed via the ninja service, refer to the following REA
 
 - [Ninja README](https://github.com/caiomarinello/ninja/blob/main/README.md)
 
+---
+
 ## Related Repositories
 
 - **Backend API**: [Ninja Backend API](https://github.com/caiomarinello/ninja)
