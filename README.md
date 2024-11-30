@@ -89,6 +89,9 @@ Navigate to the `ninjaGateway` directory and run it using:
 ```bash
 go run main.go
 ```
+
+---
+
 ## Access Endpoints
 
 | **Method** | **Endpoint** | **Description**                   | **Access** | **Status**     |
